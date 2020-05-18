@@ -6,10 +6,15 @@ RUN addgroup -g 1000 mcuser && \
 	chown -R mcuser:mcuser /out
 VOLUME /out
 RUN apk update && \
-        apk add openjdk8 tini
+        apk add openjdk8 tini wget
+RUN mkdir /buildtools && \
+	cd buildtools && \
+	wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar && \
+	java -jar BuildTools.jar
+RUN rm BuildTools.jar
 RUN mkdir /minecraft
-ADD server.jar /minecraft 
 ADD mcstarter.sh /minecraft
+RUN cp *.jar /minecraft 
 WORKDIR /out
 USER mcuser
 ENTRYPOINT ["tini","--"]
