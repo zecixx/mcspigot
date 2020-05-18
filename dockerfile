@@ -10,7 +10,8 @@ RUN apk update && \
 RUN mkdir /buildtools && \
 	cd buildtools && \
 	wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar && \
-	java -jar BuildTools.jar
+	java -jar BuildTools.jar && \
+	ls
 RUN ls
 RUN mkdir /minecraft
 ADD mcstarter.sh /minecraft
