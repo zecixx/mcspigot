@@ -11,11 +11,14 @@ RUN mkdir /buildtools && \
 	cd buildtools && \
 	wget https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar && \
 	java -jar BuildTools.jar
-RUN rm BuildTools.jar
 RUN mkdir /minecraft
 ADD mcstarter.sh /minecraft
-RUN cp *.jar /minecraft 
+RUN cp *.jar /minecraft
+RUN cd / && \
+	rm -rf buildtools/ 
 WORKDIR /out
+RUN pwd
+RUN ls
 USER mcuser
 ENTRYPOINT ["tini","--"]
 CMD ["/bin/sh","/minecraft/mcstarter.sh"]
